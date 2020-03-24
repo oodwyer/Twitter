@@ -1,0 +1,84 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<html>
+    <style>
+        body {
+            background-color: white;
+        }
+        h1 {
+            text-align: center;
+            color: #58ACFA
+        }
+        p {
+            text-align: center
+        }
+        a {
+            text-align: center;
+            color: white;
+        }
+        div {
+            background-color: #58ACFA; 
+            text-align: center;
+            margin: auto;
+            width: 50%;
+            border: 5px solid black;
+            padding: 10px; 
+        }
+    </style>
+</html>
+
+<h1> Home page </h1>
+<p>feed of tweets & hashtags</p>
+<hr>
+
+<div> 
+
+{% if user.is_authenticated %}
+    <h4> Logged in as {{user.username}}</h4>
+
+    <a href="/login">Log Out</a>
+
+    <form method="POST" action="/">
+        {% csrf_token %}
+        <p>Create Tweet</p>
+        <input name="body" placeholder="What do you want to tweet about today?" />
+        <input type="submit"/>
+    </form>
+
+    <hr>
+
+    <h2> Tweets</h2>
+
+    <hr>
+
+    {% for message in messages %}
+
+        <div class="alert alert-success">
+            <a class="close" href="#" data-dismiss="alert">×</a>
+        
+            {{ message }}
+        
+        </div>
+    {% endfor %}
+
+    {% for tweet in tweets %}
+        <a href="/profile/{{tweet.author.username}}">{{tweet.author}}</a>
+        <p>{{tweet.body}}</p>
+        <p>{{tweet.created_at}}</p>
+        <p>{{tweet.num_likes}} Likes</p>
+        <a href="/like?id={{tweet.id}}">Like</a>
+        <a href="/delete?id={{tweet.id}}">Delete</a>
+        <hr>
+    {% endfor %}
+
+    <h2> Trending Hashtags</h2>
+    {% for hashtag in hashtags %}
+        <a href="/hashtag/{{hashtag.name}}">{{hashtag.name}}</a>
+        <hr>
+    {% endfor %}
+
+
+{% endif %}
+
+</div>
+

@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<html>
+    <style>
+        test {
+            background-color: #58ACFA; 
+            text-align: center;
+        }
+        div {
+            align-content: center;
+        }
+        .card {
+            background-color: #58ACFA;
+            margin: 0 auto; /* Added */
+            float: none; /* Added */
+            margin-bottom: 10px; /* Added */
+        }
+        a {
+            color: black; 
+        }
+    </style>
+</html>
+
+<test>
+<h1>Tweets related to #{{h.name}}</h1>
+</test>
+
+{% if user.is_authenticated %}
+    {% for t in tweets %}
+
+        <div class="card" style="width: 50rem;">
+            <div class="card-body">
+                    <a href="/profile/{{t.author.username}}">{{t.author}}</a>
+                    <p>{{t.body}}</p>
+                    <p>{{t.created_at}}</p>
+                    <a href="/like?id={{t.id}}">Like</a>                    
+                    <p>{{t.num_likes}} Likes</p>
+                    <a href="/delete?id={{t.id}}">Delete</a>
+            </div>
+        </div>
+        
+    
+{% endfor %}
+
+<a href="/home">Home</a>
+<a href="/login">Log Out</a>
+
+{% endif %}
